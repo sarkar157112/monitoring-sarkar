@@ -17,7 +17,7 @@ mkdir prometheus alertmanager grafana
 touch prometheus/prometheus.yml alertmanager/alertmanager.yml
 ```
 
-####Check prometheus/prometheus.yml####
+#### Check prometheus/prometheus.yml ####
 
 Replace <EXTERNAL_SERVER_IP> with the IP address of the server you want to monitor. Ensure the Node Exporter is installed and running on the external server.
 
@@ -32,7 +32,7 @@ touch grafana/provisioning/datasources.yaml
 ```
 5. Start your monitoring stack:
 ```
-docker-compose up -d
+**docker-compose up -d**
 ```
 6. This will start Prometheus, Grafana, Node Exporter, and Alertmanager. You can access Grafana on http://<EC2_INSTANCE_IP>:3000 and log in with the username admin and the password secret.
 
