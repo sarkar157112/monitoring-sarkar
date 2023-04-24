@@ -34,6 +34,11 @@ touch grafana/provisioning/datasources.yaml
 ```
 docker-compose up -d
 ```
+for stop 
+```
+docker-compose down -v
+```
+
 6. This will start Prometheus, Grafana, Node Exporter, and Alertmanager. You can access Grafana on http://<EC2_INSTANCE_IP>:3000 and log in with the username admin and the password secret.
 
 7. Add additional monitoring dashboards to Grafana as needed.
