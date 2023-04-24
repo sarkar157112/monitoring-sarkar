@@ -1,0 +1,55 @@
+version: '3.7'
+
+services:
+  prometheus:
+    image: prom/prometheus:v2.30.3
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus:/etc/prometheus
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.enable-lifecycle'
+    depends_on:
+      - nodeexporter
+      - alertmanager
+
+  nodeexporter:
+    image: prom/node-exporter:v1.2.2
+    container_name: nodeexporter
+    ports:
+      - 9100:9100
+    deploy:
+      mode: global
+
+  alertmanager:
+    image: prom/alertmanager:v0.23.0
+    container_name: alertmanager
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager:/etc/alertmanager
+    command:
+      - '--config.file=/etc/alertmanager/alertmanager.yml'
+
+  grafana:
+    image: grafana/grafana:8.2.5
+    container_name: grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - grafana_data:/var/lib/grafana
+      - ./grafana/provisioning:/etc/grafana/provisioning
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=secret
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus_data:
+  grafana_data:
+

@@ -1,0 +1,22 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  group_by: ['alertname', 'job']
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 4h
+  receiver: 'email-notification'
+
+receivers:
+- name: 'email-notification'
+  email_configs:
+  - to: 'your@email.com'
+    from: 'noreply@your-domain.com'
+    smarthost: smtp.your-email-provider.com:587
+    auth_username: 'your-email-username'
+    auth_password: 'your-email-password'
+    auth_identity: 'your-email-address'
+    require_tls: true
+    tls_config:
+      insecure_skip_verify: false
